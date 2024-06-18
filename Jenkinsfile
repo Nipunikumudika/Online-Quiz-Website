@@ -13,8 +13,9 @@ pipeline {
         stage('Build Docker Images') {
             steps {
                 script {
-                    bat 'docker build -t nipunikumudika/quizzania-frontend:  client'
-                    bat 'docker build -t nipunikumudika/quizzania-backend: server'
+                    bat 'docker build -t nipunikumudika/quizzania-frontend:%BUILD_NUMBER%  client'
+                    bat 'docker build -t nipunikumudika/quizzania-backend:%BUILD_NUMBER%  server'
+
                 }
             }
         }
