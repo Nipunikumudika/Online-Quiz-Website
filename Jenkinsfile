@@ -13,10 +13,8 @@ pipeline {
         stage('Build Backend Docker Image') {
             steps {
                 script {
-                    def backendImage = "nipunikumudika/quizzania-backend:${BUILD_NUMBER}"
-                    docker.build(tag: backendImage, context: './server')
-                    def backendImage = "nipunikumudika/quizzania-frontend:${BUILD_NUMBER}"
-                    docker.build(tag: backendImage, context: './client')
+                    bat 'docker build -t nipunikumudika/quizzania-frontend:%BUILD_NUMBER%  client'
+                    bat 'docker build -t nipunikumudika/quizzania-backend:%BUILD_NUMBER%  server'
                 }
             }
         }
