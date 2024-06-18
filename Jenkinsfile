@@ -6,16 +6,18 @@ pipeline {
         stage('SCM Checkout') {
             steps {
                 retry(3) {
-                    git branch: 'main', url: 'https://github.com/Nipunikumudika/4067-Mallikarachchi'
+                    git branch: 'main', url: 'https://github.com/Nipunikumudika/Online-Quiz-Website'
                 }
             }
         }
-        stage('Build Docker Image') {
-            steps {  
-                bat 'docker build -t nipunikumudika/rubik-cube:%BUILD_NUMBER% .'
+        stage('Build Backend Docker Image') {
+            steps {
+                script {
+                    docker.build('nipunikumudika/quizzania-backend:%BUILD_NUMBER%', './server')
+                    docker.build('nipunikumudika/quizzania-backend:%BUILD_NUMBER%', './client')
+                }
             }
         }
-
         stage('Login to Docker Hub') {
     steps {
         withCredentials([string(credentialsId: 'Nipuni-DockerhubPassword2', variable: 'PW')]) {
@@ -24,11 +26,14 @@ pipeline {
     }
 }
 
-        stage('Push Image') {
+        stage('Deploy with Docker Compose') {
             steps {
-                bat 'docker push nipunikumudika/rubik-cube:%BUILD_NUMBER%'
+                script {
+                    sh 'docker-compose up -d'
+                }
             }
         }
+
     }
     post {
         always {
