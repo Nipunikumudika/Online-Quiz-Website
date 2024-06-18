@@ -13,8 +13,10 @@ pipeline {
         stage('Build Backend Docker Image') {
             steps {
                 script {
-                    docker.build('nipunikumudika/quizzania-backend:%BUILD_NUMBER%', './server')
-                    docker.build('nipunikumudika/quizzania-backend:%BUILD_NUMBER%', './client')
+                    def backendImage = "nipunikumudika/quizzania-backend:${BUILD_NUMBER}"
+                    docker.build(tag: backendImage, context: './server')
+                    def backendImage = "nipunikumudika/quizzania-frontend:${BUILD_NUMBER}"
+                    docker.build(tag: backendImage, context: './client')
                 }
             }
         }
