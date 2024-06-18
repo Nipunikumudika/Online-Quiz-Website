@@ -10,7 +10,7 @@ pipeline {
                 }
             }
         }
-        stage('Build Backend Docker Image') {
+        stage('Build Docker Images') {
             steps {
                 script {
                     bat 'docker build -t nipunikumudika/quizzania-frontend:%BUILD_NUMBER%  client'
@@ -29,7 +29,7 @@ pipeline {
         stage('Deploy with Docker Compose') {
             steps {
                 script {
-                    sh 'docker-compose up -d'
+                    bat 'docker-compose up -d'
                 }
             }
         }
