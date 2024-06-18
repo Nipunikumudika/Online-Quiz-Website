@@ -5,7 +5,7 @@ pipeline {
     stages { 
         stage('SCM Checkout') {
             steps {
-                retry(3) {
+                retry(10) {
                     git branch: 'main', url: 'https://github.com/Nipunikumudika/Online-Quiz-Website'
                 }
             }
