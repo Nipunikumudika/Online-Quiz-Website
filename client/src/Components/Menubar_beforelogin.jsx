@@ -20,7 +20,7 @@ function Menubar() {
                 
               });
             }
-          }>Home</a>
+          }>Menu</a>
         </li>
         <li className="nav-item">
           <a className="nav-link" onClick={
